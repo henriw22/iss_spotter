@@ -31,15 +31,35 @@ const { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, nextISSTimesForMyLocat
 // });
 
 
+// nextISSTimesForMyLocation((error, passTimes) => {
+//   if (error) {
+//     return console.log("It didn't work!", error);
+//   }
+//   // success, print out the deets!
+  
+//   for (let x of passTimes) {
+//     const date = new Date(0);
+//     date.setUTCSeconds(x.risetime);
+//     console.log(`Next pass at ${date} for ${x.duration} seconds!`);
+//   }
+// });
+
+
+const printPassTimes = function(passTimes) {
+  for (const pass of passTimes) {
+    const datetime = new Date(0);
+    datetime.setUTCSeconds(pass.risetime);
+    const duration = pass.duration;
+    console.log(`Next pass at ${datetime} for ${duration} seconds!`);
+  }
+};
+
 nextISSTimesForMyLocation((error, passTimes) => {
   if (error) {
     return console.log("It didn't work!", error);
   }
   // success, print out the deets!
-  
-  for (let x of passTimes) {
-    const date = new Date(0);
-    date.setUTCSeconds(x.risetime);
-    console.log(`Next pass at ${date} for ${x.duration} seconds!`);
-  }
+  printPassTimes(passTimes);
 });
+
+module.exports = { printPassTimes };
